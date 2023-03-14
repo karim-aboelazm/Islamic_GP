@@ -25,8 +25,11 @@
   <link href="{% static '' %}vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="{% static '' %}vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="{% static '' %}vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet"><!-- Template Main CSS File -->
   <link href="{% static '' %}css/style.css" rel="stylesheet">
 
   <!-- =======================================================
@@ -35,6 +38,13 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    .align-items-stretch .card:hover{
+      background-color:rgba(0, 0, 0, 0.9);
+      color:white;
+      transition: 0.5s ease-in all;
+    }
+  </style>
 </head>
 
 <body>
@@ -43,7 +53,7 @@
   <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="index.html">Gp<span>.</span></a></h1>
+      <h1 class="logo me-auto me-lg-0"><a href="index.html">ISLAMIC</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="{% static '' %}img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -87,49 +97,54 @@
 
       <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
         <div class="col-xl-6 col-lg-8">
-          <h1>Powerful Digital Solutions With Gp<span>.</span></h1>
-          <h2>We are team of talented digital marketers</h2>
+          <h1><span style="font-size:12px;position:relative:top:10px">[سورة الفتح ايه(1)]</span>إِنَّا فَتَحْنَا لَكَ فَتْحًا مُبِينًا<span></span></h1>
+          
         </div>
       </div>
 
       <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
-        <div class="col-xl-2 col-md-4">
+        <div class="col-xl-2 col-md-4 pt-1">
           <div class="icon-box">
-            <i class="ri-store-line"></i>
-            <h3><a href="">Lorem Ipsum</a></h3>
+            <i class="fas fa-hand-point-up"></i>
+            <h3><a href="">الشهادة</a></h3>
           </div>
         </div>
-        <div class="col-xl-2 col-md-4">
+
+        <div class="col-xl-2 col-md-4 pt-1">
           <div class="icon-box">
-            <i class="ri-bar-chart-box-line"></i>
-            <h3><a href="">Dolor Sitema</a></h3>
+            <i class="fas fa-mosque"></i>
+            <h3><a href="">اقامة الصلاة</a></h3>
           </div>
         </div>
-        <div class="col-xl-2 col-md-4">
+
+        <div class="col-xl-2 col-md-4 pt-1">
           <div class="icon-box">
-            <i class="ri-calendar-todo-line"></i>
-            <h3><a href="">Sedare Perspiciatis</a></h3>
+            <img src="{% static 'img/give-love.png' %}" style="width: 45%;color:yellow;">
+            <h3><a href="">إيتاء الزكاه</a></h3>
           </div>
         </div>
-        <div class="col-xl-2 col-md-4">
+        
+        <div class="col-xl-2 col-md-4 pt-1">
           <div class="icon-box">
-            <i class="ri-paint-brush-line"></i>
-            <h3><a href="">Magni Dolores</a></h3>
+            <i class="fas fa-star-and-crescent"></i>
+            <h3><a href="">صوم رمضان</a></h3>
           </div>
         </div>
-        <div class="col-xl-2 col-md-4">
+
+        <div class="col-xl-2 col-md-4 pt-1">
           <div class="icon-box">
-            <i class="ri-database-2-line"></i>
-            <h3><a href="">Nemos Enimade</a></h3>
+            <i class="fas fa-kaaba"></i>
+            <h3><a href="">حج البيت</a></h3>
           </div>
         </div>
+       
       </div>
 
       <div class="row mt-5">
         <div class="col-md-8 mx-auto">
-          <div class="row bg-white mt-5" style="border-radius: 25px;">
-            <div class="col-md-11  py-2"> NEW TASK</div>
-            <div class="col-md-1  py-2" style="background-color: orange;border-bottom-right-radius: 25px;border-top-right-radius: 25px;">BTN</div>
+          <div class="row bg-white mt-5 p-3" style="border-radius: 25px;">
+            <div class="col-md-11  py-2">Search...</div>
+            <div class="col-md-1  py-2" style="border-bottom-right-radius: 25px;border-top-right-radius: 25px;"><i class="fas fa-microphone" style="font-size:22px;"></i></div>
           </div>
         </div>
       </div>
@@ -181,31 +196,31 @@
           <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
             <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
               <i class="fa fa-mosque" style="font-size:22px;position:relative;top:7px;"></i>
-              <h4>FAJR</h4>
+              <h4>EL FAJR</h4>
               <p>Begins:5:14 AM    -     Iqamah:6:15 AM</p>
               
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="fa fa-mosque" style="font-size:22px;position:relative;top:7px;"></i>
-              <h4>ZUHR</h4>
+              <h4>EL DHUHR</h4>
               <p>Begins:12:15 PM    -     Iqamah:1:30 PM</p>
               
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
             <i class="fa fa-mosque" style="font-size:22px;position:relative;top:7px;"></i>
-              <h4>ASR</h4>
+              <h4>EL ASR</h4>
               <p>Begins:3:43 PM    -     Iqamah:4:00 PM</p>
               
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
             <i class="fa fa-mosque" style="font-size:22px;position:relative;top:7px;"></i>
-              <h4>MAGRIB</h4>
+              <h4>EL MAGRIB</h4>
               <p>Begins:5:41 PM    -     Iqamah:5:40 PM</p>
               
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
             <i class="fa fa-mosque" style="font-size:22px;position:relative;top:7px;"></i>
-              <h4>ISHA</h4>
+              <h4>EL ISHA'A</h4>
               <p>Begins:7:02 PM    -     Iqamah:8:00 PM</p>
               
             </div>
@@ -225,43 +240,37 @@
         </div>
 
         <div class="row">
-          <div class="col d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">Lorem Ipsum</a></h4>
-              
-            </div>
-          </div>
-
-          <div class="col d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">Sed ut perspiciatis</a></h4>
-              
-            </div>
-          </div>
-
-          <div class="col d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="">Magni Dolores</a></h4>
-              
-            </div>
-          </div>
-
-          <div class="col d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-world"></i></div>
-               <h4><a href="">Magni Dolores</a></h4>
-             
-            </div>
-          </div>
-
-          <div class="col d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-slideshow"></i></div>
-               <h4><a href="">Magni Dolores</a></h4>
-              
+          <div class="col-md-10 mx-auto">
+            <div class="row">
+              <div class="col d-flex align-items-stretch mt-4 " data-aos="zoom-in" data-aos-delay="100">
+                <div class="card p-2" style="border:2px solid  #ffc451;width:100%;">
+                  <h4 class="text-center pt-1"><a href="">Ablution</a></h4>
+                </div>
+              </div>
+    
+              <div class="col d-flex align-items-stretch mt-4 " data-aos="zoom-in" data-aos-delay="100">
+                <div class="card p-2 " style="border:2px solid  #ffc451;width:100%;">
+                  <h4 class="text-center pt-1"><a href="">Pray</a></h4>
+                </div>
+              </div>
+    
+              <div class="col d-flex align-items-stretch mt-4 " data-aos="zoom-in" data-aos-delay="100">
+                <div class="card p-2 " style="border:2px solid  #ffc451;width:100%;">
+                  <h4 class="text-center pt-1"><a href="">Tasbih</a></h4>
+                </div>
+              </div>
+    
+              <div class="col d-flex align-items-stretch mt-4 " data-aos="zoom-in" data-aos-delay="100">
+                <div class="card p-2 " style="border:2px solid  #ffc451;width:100%;">
+                   <h4 class="text-center pt-1"><a href="">Azkar</a></h4>
+                </div>
+              </div>
+    
+              <div class="col d-flex align-items-stretch mt-4 " data-aos="zoom-in" data-aos-delay="100">
+                <div class="card p-2 " style="border:2px solid  #ffc451;width:100%;">
+                   <h4 class="text-center pt-1"><a href="">Duaas</a></h4>
+        
+              </div>
             </div>
           </div>
         </div>
@@ -274,166 +283,21 @@
       <div class="container" data-aos="zoom-in">
 
         <div class="text-center">
-          <h3>Call To Action</h3>
-          <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <a class="cta-btn" href="#">Call To Action</a>
+          <div class="row">
+            <div class="col-md-8 mx-auto">
+              <div class="row">
+                <div class="col-md-6"><a class="cta-btn" href="#">Hadeeth</a></div>
+                <div class="col-md-6"><a class="cta-btn" href="#">Islamic Stories</a></div>
+              </div>
+              
+            </div>
+          </div>
         </div>
 
       </div>
     </section><!-- End Cta Section -->
 
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>Check our Portfolio</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 1</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 2</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 2</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 2</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 3</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 1</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 3</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="{% static '' %}img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="{% static '' %}img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Portfolio Section -->
+    
 
     <!-- ======= Counts Section ======= -->
     <section id="counts" class="counts">
