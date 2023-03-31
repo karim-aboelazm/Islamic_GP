@@ -9,6 +9,7 @@ import requests
 
 class HomeView(TemplateView):
     template_name = 'index.html'
+<<<<<<< HEAD
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # quran = Quran()
@@ -65,3 +66,13 @@ class SearchView(TemplateView):
         context["results"] = filter_ayah 
         return context
        
+=======
+    
+class ProphetsStoriesView(TemplateView):
+    template_name = "prophets_stories.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context[""] = 
+        return context
+    
+>>>>>>> 22b9cbcf09e59a03b9133eba451aa656bda6d5e1
