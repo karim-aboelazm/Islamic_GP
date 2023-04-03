@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ISLAMIC
+{% endblock title %}
+{% block header__card__content %}
+<div class="col-md-9 mx-auto pt-3 pb-5 px-5 text-right header__card" id="">
+{% if results|length > 0 %}
+{% for aya in results  %}
+<p class="card-title text-center" style="text-align:center">﴿ <a id="" style="text-decoration:none;color:#fff;" href="{% url 'app:ayah_info' aya.id %}">{{aya.text}}</a> ( {{aya.ar_number}} ) ﴾</p>
+<p class="ayah-info text-small">( سورة  : {{aya.surah.name}} ، نوع السورة : {{aya.surah.revelation_type}} ، رقم الاية : ( {{aya.ar_number}} ) ، جزء رقم : ( {{aya.juz.ar_number}} ) ، حزب رقم :( {{aya.hizb.ar_number}} ) )</p>
+<hr>
+{% endfor %}
+<p>{{tafseer_result}}</p>
+{% else %}
+<p class="text-center">من فضلك قم بكتابة الايه بشكل صحيح</p>
+<p class="text-center"><a href="/" class="go-back-btn">اعد كتابة الاية</a></p>
+{% endif %}
+</div>
+{% endblock header__card__content %}
+    

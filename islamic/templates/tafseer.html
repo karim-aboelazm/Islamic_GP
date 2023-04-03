@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ISLAMIC
+{% endblock title %}
+{% block header__card__content %}
+<div class="col-md-9 mx-auto pt-3 pb-5 px-5 text-right header__card" id="ayah_num">
+    {% if tafseer_result != "" %}
+    <p class="text-center hr-lines pt-5"> (  تفسير {{tafseer_ar}}   )</p>
+    <p class="text-center">﴿ {{ayah.text}} ﴾</p>
+    <p class="text-center ayah-info pt-5"> ( سورة : {{ayah.surah.name}}  جزء : {{ayah.juz.number}} حزب :  {{ayah.hizb.number}}       )</p>
+    <p>{{tafseer_result}}</p>
+    {% else %}
+    <p class="text-center">من فضلك قم بكتابة الايه بشكل صحيح</p>
+    <p class="text-center"><a href="/" class="go-back-btn" style="">اعد كتابة الاية</a></p>
+    {% endif %}
+</div>
+{% endblock header__card__content %}

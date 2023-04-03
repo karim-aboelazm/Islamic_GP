@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Ayah Information
+{% endblock title %}
+{% block extra_static_urls %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+    #loader,#breaker,#breaker-two{display:none !important;}
+    .header-image{display:none !important;}
+    #about{display:block !important;}
+</style>
+{% endblock extra_static_urls %}
+{% block header__card__content %}
+<div class="col-md-9 mx-auto pt-3 pb-5 px-5 text-right header__card" id="">
+    <p class="text-center">﴿ {{ayah.text}} ({{ayah.ar_number}}) ﴾</p>
+    <p class="text-center ayah-info pt-5"> ( سورة : {{ayah.surah.name}}  جزء : {{ayah.juz.ar_number}} حزب :  {{ayah.hizb.ar_number}}       )</p>
+    <div class="row text-center">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#menu1"> {{tafseer_ar1}}</a></li>
+            <li><a data-toggle="tab" href="#menu2"> {{tafseer_ar2}}</a></li>
+            <li><a data-toggle="tab" href="#menu3"> {{tafseer_ar3}}</a></li>
+            <li><a data-toggle="tab" href="#menu4"> {{tafseer_ar4}}</a></li>
+            <li><a data-toggle="tab" href="#menu5"> {{tafseer_ar5}}</a></li>
+            <li><a data-toggle="tab" href="#menu6">الاعـــراب</a></li>
+            <li><a data-toggle="tab" href="#menu7">الاستماع</a></li>
+        </ul>
+        <style>
+            ul li a{
+                text-decoration:none;
+                color:#fff;
+            }
+            .nav-tabs>li>a:hover,.nav-tabs>li.active>a,.nav-tabs>li.active>a:focus{
+                background-color:#c70039;
+                color:#fff;
+                border-color:#c70039;
+            }
+        </style>
+        <div class="tab-content">
+            <div id="menu1" class="row tab-pane fade in active">
+                <div class="col-md-12 pt-3" id="t1">
+                    <p class="text-center pt-5"> (  تفسير {{tafseer_ar1}}   )</p>
+                    <p>{{tafseer1}}</p>
+                </div>
+            </div>
+            <div id="menu2" class="row tab-pane fade">
+                <div class="col-md-12 pt-3" id="t2">
+                    <p class="text-center pt-5"> (  تفسير {{tafseer_ar2}}   )</p>
+                    <p>{{tafseer2}}</p>
+                </div>
+            </div>
+            <div id="menu3" class="row tab-pane fade">
+                <div class="col-md-12 pt-3" id="t3">
+                    <p class="text-center pt-5"> (  تفسير {{tafseer_ar3}}   )</p>
+                    <p>{{tafseer3}}</p>
+                </div>
+            </div>
+            <div id="menu4" class="row tab-pane fade">
+                <div class="col-md-12 pt-3" id="t4">
+                    <p class="text-center pt-5"> (  تفسير {{tafseer_ar4}}   )</p>
+                    <p>{{tafseer4}}</p>
+                </div>
+            </div>
+            <div id="menu5" class="row tab-pane fade">
+                <div class="col-md-12 pt-3" id="t5">
+                    <p class="text-center pt-5"> (  تفسير {{tafseer_ar5}}   )</p>
+                    <p>{{tafseer5}}</p>
+                </div>
+            </div>
+            <div id="menu6" class="row tab-pane fade">
+                <div class="col-md-12 pt-3" id="t6">
+                    <p class="text-center pt-5"> (  الاعـــراب   )</p>
+                    <p>{{eraab}}</p>
+                </div>
+            </div>
+            <div id="menu7" class="row tab-pane fade">
+                <div class="col-md-12 pt-3" id="t7">
+                    <p class="text-center pt-5"> (  الاستماع   )</p>
+                    <audio id="" controls="controls" class="align-right">
+                        <source id="activeAyah" src="{{aya_mp3}}" title="2826" type="audio/mp3">
+                    </audio>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock header__card__content %}

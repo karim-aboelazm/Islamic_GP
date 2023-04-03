@@ -1,0 +1,29 @@
+{% load static %}
+
+    <div class="cursor"></div>
+    <div id="loader"><span class="color">I</span>slamic</div>
+    <div id="breaker"></div>
+    <div id="breaker-two"></div>
+    <div id="navigation-content">
+        <div class="logo"><img src="{% static '' %}new/images/logoo.png" alt="logo"></div>
+        <div class="navigation-close">
+            <span class="close-first"></span>
+            <span class="close-second"></span>
+        </div>
+        <div class="navigation-links">
+            <a href="/" data-text="الرئيسية" id="home-link">الرئيسية</a>
+            <a href="{% url 'app:quraan_list' %}" data-text="القرأن" id="about-link">القرأن</a>
+            <a href="#" data-text="الحديث" id="blog-link">الحديث</a>
+            <a href="#" data-text="التعليم" id="portfolio-link">التعليم</a>
+            <a href="#" data-text="القصص" id="contact-link">القصص</a>
+        </div>
+    </div>
+    <div id="navigation-bar">
+        <img src="{% static '' %}new/images/logoo.png" alt="logo">
+        <div class="menubar">
+            <span class="first-span"></span>
+            <span class="second-span"></span>
+            <span class="third-span"></span>
+        </div>
+    </div>
+    

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Willy Wonkas - Personal Portfolio Website Template" />
+    <meta name="keywords"
+        content="blog, business card, creative, creative portfolio, cv theme, online resume, personal, portfolio, professional cv, responsive portfolio, resume, resume theme, vcard" />
+    <meta name="author" content="willy wonka" />
+    <title>Islamic</title>
+    <!--favicon-img-->
+    <link rel="icon" type="image/png" href="{% static '' %}new/images/favicon.png">
+    <!--favicon-img-->
+    <!--main css file should not be removed -->
+    <link rel="stylesheet" href="{% static '' %}new/css/index.css">
+    <!--main css file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cba01bb0d0.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        
+    
+    </script>
+</head>
+
+<body>
+    <!--contains all the div-->
+    <div id="all">
+        <!--mouse  follower-->
+        <div class="cursor"></div>
+        <!--mouse  follower-->
+        <!--loader-->
+        <div id="loader">
+            <span class="color">I</span>slamic
+        </div>
+        <!--loader-end-->
+        <!--link-screen-->
+        <div id="breaker"></div>
+        <div id="breaker-two"></div>
+        <!--link-screen-->
+        <!--Main-Section-->
+        <!--Navigator-fullscreen-->
+        <div id="navigation-content">
+            <div class="logo">
+                <img src="{% static '' %}new/images/logoo.png" alt="logo">
+            </div>
+            <div class="navigation-close">
+                <span class="close-first"></span>
+                <span class="close-second"></span>
+            </div>
+            <div class="navigation-links">
+                <a href="#" data-text="الرئيسية" id="home-link">الرئيسية</a>
+                <a href="#about" data-text="القرأن" id="about-link">القرأن</a>
+                <a href="#" data-text="الحديث" id="blog-link">الحديث</a>
+                <a href="#" data-text="التعليم" id="portfolio-link">التعليم</a>
+                <a href="#" data-text="القصص" id="contact-link">القصص</a>
+            </div>
+        </div>
+        <!--Navigator-Fullscreen END-->
+        <!--Home Page-->
+        <!--Menubar-->
+        <div id="navigation-bar">
+             <img src="{% static '' %}new/images/logoo.png" alt="logo">
+            <div class="menubar">
+                <span class="first-span"></span>
+                <span class="second-span"></span>
+                <span class="third-span"></span>
+            </div>
+        </div>
+        <!--Menubar End-->
+        <!--Header-->
+        <div id="header">
+            <div id="particles"></div>
+            <!--Social Media Links-->
+            
+            <!--Social Media Links end-->
+            <div class="header-content mt-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 mx-auto pt-3 px-5 text-right" style="
+                            text-align: center;
+                            max-height: 600px;
+                            overflow-y: auto;
+                            text-align: justify;
+                            font-size: 30px;
+                            background-color: rgba(0, 0, 0, 0.7889);
+                            border-radius: 15px;
+                            box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+                            "
+                            id="ayah_num">
+                            <div id="ayah-container" class="pt-5 "></div>
+                            <script>
+                                function getAyah(index) {
+                                    var ayahs = JSON.parse('{{ ayahs|escapejs }}');
+                                    var surahs = JSON.parse('{{ surahs|escapejs }}');
+                                    var ayahIndex = parseInt(localStorage.getItem('currentAyahIndex')) || 0; // Get the current ayah index from localStorage or use 0 if it doesn't exist
+                                    var ayah = ayahs[ayahIndex % ayahs.length].fields; // Get the ayah at the specified index and wrap around if we go beyond the list length
+                                    var surah = surahs[ayah.surah-1].fields; // Get the ayah at the specified index and wrap around if we go beyond the list length
+                                    $("#ayah-container").html("<p class='text-white text-center' > ﴿ "+ ayah.text +" ﴾ </p>"+"<p class='text-center' style='font-size:16px;position:relative:top:10px;font-weight:700;' >"+"<span id='ayah_num'>"+" ( "+"سورة "+surah.name+" ، "+ surah.revelation_type  +" ، ايه"+" ( "+ayah.number+" ) " +" ، جزء"+" ( "+ayah.juz+" ) "  +" ، حزب"+" ( "+ayah.hizb+" ) " +" ) "+"</span>"+"</p>"); // Update the HTML element with the ayah text and translation
+                                    localStorage.setItem('currentAyahIndex', ayahIndex + 1); // Increment the ayah index and store it in localStorage
+                                }
+                                
+                                $(document).ready(function() {
+                                    var currentAyahIndex = parseInt(localStorage.getItem('currentAyahIndex')) || 0; // Get the current ayah index from localStorage or use 0 if it doesn't exist
+                                    getAyah(currentAyahIndex);
+                                    setInterval(function() {
+                                        currentAyahIndex++;
+                                        getAyah(currentAyahIndex);
+                                    }, 10000); // Refresh every 5 seconds
+                                });
+                            </script>
+                            <script>
+                                // Get the element containing English numbers
+                                const element = document.getElementById("ayah_num");
+
+                                // Replace English numbers with Arabic numerals
+                                const content = element.innerHTML;
+                                const arabicNumerals = {
+                                "0": "٠",
+                                "1": "١",
+                                "2": "٢",
+                                "3": "٣",
+                                "4": "٤",
+                                "5": "٥",
+                                "6": "٦",
+                                "7": "٧",
+                                "8": "٨",
+                                "9": "٩"
+                                };
+                                const newContent = content.replace(/[0-9]/g, match => arabicNumerals[match]);
+                                element.innerHTML = newContent;
+                                
+                               
+                            </script>
+                           
+                            <style>
+                                .hr-lines:before{
+                                content:" ";
+                                display: block;
+                                height: 2px;
+                                width: 35%;
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                background: #fff;
+                                }
+                                .hr-lines{
+                                position: relative;
+                                /*  new lines  */
+                                
+                                max-width: 100%;
+                                text-align: center;
+                                }
+                                .hr-lines:after{
+                                    content:" ";
+                                    height: 2px;
+                                    width: 35%;
+                                    background: #fff;
+                                    display: block;
+                                    position: absolute;
+                                    top: 50%;
+                                    right: 0;
+                                    }
+                                @media only screen and (max-width: 1200px) {
+                                .hr-lines:after,.hr-lines:before {
+                                    width: 15%;
+                                }
+                                }
+                            </style>
+                                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--header image-->
+            <div class="header-image">
+                <img src="images/q.png" style="float: right; opacity: 0.0699;" alt="logo">
+            </div>
+            <!--header image end-->
+        </div>
+    </div>
+    <!--Header End-->
+    <!--HomePage End-->
+    <!--Main-Section End-->
+    <!--about-->
+    <div id="about">  
+        <!--about content-->
+        <div id="" class="container">
+            <div class="about-header">
+                القرأن <span class="color">الكريم</span>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-5" >
+                    <form class="form-control" method="get" action="{% url 'app:search' %}" style="border: none;background:none;">
+                        <div class="row px-5">
+                            <div class="col-md-12 pt-3" style="display: inline-flex;height: 100px;">
+                                <div class="form-group" style="width: 80%;">
+                                    <input type="text" class="form-control py-3" id="name" name="keyword" placeholder="ابحث عن الايه القرأنيه بالتشكيل" style="border-radius: 15px; font-size: 22px;background:none;color:#fff;box-shadow:none">
+                                </div>
+                                <div class="mic mx-3" style="width: 10%;">
+                                    <button type="button" class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-microphone" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="search mx-3" style="width: 10%;">
+                                    <button type="submit" class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-search" aria-hidden="true"></i></button> 
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" style="max-width: 100%;">
+                
+                {% for surah in all_surahs %}
+                <div class="col-md-3">
+                    <div class="service wow" style="width:100%;height: 80px;display: inline-flex;"> 
+                        <div class="service-description text-white" style="z-index: 100;width:80%">
+                            <p class="pt-3"><a href="{% url 'app:quran' surah.id %}" style="text-decoration:none;color:#fff;font-size:25px"> سورة  {{surah.name}}</a></p>
+                        </div>
+                        <div class="service-img" style="text-align: left;width:20%">
+                            <img src="{% static '' %}new/images/quran.png" style="width:100%;height: 100%;margin: 0;" alt="service-one">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                    
+                
+            </div> 
+        </div>
+        <!--services start-->
+        <div id="services">
+            <!--services header-->
+            <div class="services-heading wow">
+                <span class="color">تفسير</span> الايات
+            </div>
+            <!--services header end-->
+            <!--services content-->
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <form class="form-control" action="{% url 'app:tafseer' %}" style="border: none;background:none;">
+                        <div class="row px-5">
+                            <div class="mb-3">
+                                <textarea class="form-control" name="t_ayah" style="background: none;color:#fff;font-size: 22px;" placeholder="ادخل الايه المراد تفسيرها" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                              </div>
+                            <div class="input-group">
+                                <select class="form-select" id="inputGroupSelect04" style="background: none;color:#fff;" required aria-label="Example select with button addon" name="tafseer" >
+                                  <option value=""  style="background: none;color:#c70039;font-size: 18px;">اختر نوع التفسير</option>
+                                  <option value="1" style="background: none;color:#c70039;font-size: 18px;">تفسير السعدي</option>
+                                  <option value="2" style="background: none;color:#c70039;font-size: 18px;">تفسير البغوي</option>
+                                  <option value="3" style="background: none;color:#c70039;font-size: 18px;">تفسير ابن كثير</option>
+                                  <option value="4" style="background: none;color:#c70039;font-size: 18px;">تفسير القرطبي</option>
+                                  <option value="5" style="background: none;color:#c70039;font-size: 18px;">تفسير الطبري</option>
+                                </select>
+                                <button class="m-2 p-3" style="border-radius: 12px;" type="submit">فسر الان</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-9 mx-auto text-center text-white p-5" id="tafsir" style="border:2px solid #c70039;border-radius:25px; display: none;">
+                    <h2 class="text-center text-uppercase text-center mb-3"> تفسير ابن كثير</h2>
+                    <p style="text-align: justify;">
+                        Give textual form controls like s an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like  an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like  an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like  an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like an upgrade with custom styles, sizing, focus states, and more.Give textual form controls like  an upgrade with custom styles, sizing, focus states, and more.
+                    </p>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <!--about end-->
+    <!--portfolio-->
+    <div id="portfolio">
+        <div class="portfolio-header"> <span class="color"> My </span> Portfolio
+            <span class="header-caption"> Some Of My <span class="color"> Works</span></span>
+        </div>
+        <div id="portfolio-content">
+            <div class="portfolio portfolio-first">
+                <div class="portfolio-image">
+                    <img src="images/portfolio-first.jpg" alt="portfolio-first">
+                </div>
+                <div class="portfolio-text">
+                    <h2>App Idea</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad ut optio repellat cupiditate
+                        expedita eius dignissimos. Id cumque placeat minima ad laudantium suscipit voluptatem ducimus
+                    </p>
+                    <div class="button"><a href="#"><button><span class="index"> View Project<i
+                                        class="gg-arrow-right"></i></span></button></a></div>
+                </div>
+            </div>
+            <div class="portfolio portfolio-second">
+                <div class="portfolio-image">
+                    <img src="images/portfolio-second.jpg" alt="portfolio-second">
+                </div>
+                <div class="portfolio-text">
+                    <h2>Web Designing</h2>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id cumque placeat minima ad laudantium
+                        suscipit
+                        voluptatem ducimus. Id cumque placeat minima ad laudantium suscipit voluptatem ducimus</p>
+                    <div class="button"><a href="#"><button><span class="index"> View Project<i
+                                        class="gg-arrow-right"></i></span></button></a></div>
+                </div>
+            </div>
+
+            <div class="portfolio portfolio-third">
+                <div class="portfolio-image">
+                    <img src="images/portfolio-third.jpg" alt="portfolio-third">
+                </div>
+                <div class="portfolio-text">
+                    <h2>UI Designing</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad ut optio repellat cupiditate
+                        expedita eius dignissimos
+                        .. Id cumque placeat minima ad laudantium suscipit voluptatem ducimus</p>
+                    <div class="button"><a href="#"><button><span class="index"> View Project<i
+                                        class="gg-arrow-right"></i></span></button></a></div>
+                </div>
+            </div>
+            <div class="portfolio portfolio-fourth">
+                <div class=" portfolio-image">
+                    <img src="images/portfolio-fourth.jpg" alt="portfolio-fourth">
+                </div>
+                <div class="portfolio-text">
+                    <h2>Wow Graphics</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad ut optio repellat cupiditate
+                        expedita eius dignissimos. Id cumque placeat minima ad laudantium suscipit voluptatem ducimus
+                    </p>
+                    <div class="button"><a href="#"><button><span class="index"> View Project<i
+                                        class="gg-arrow-right"></i></span></button></a></div>
+                </div>
+            </div>
+        </div>
+        <!--copyright-section You Can Remove After Downloading-->
+        <div class="footer">
+            <div class="footer-text">
+                <img src="./images/copyright.png" alt="copyright-img" class="images" height="14px"> Willy Wonkas
+            </div>
+        </div>
+        <!--copyright-section-->
+    </div>
+    <!--portfolio end-->
+    <!--blog-->
+    <div id="blog">
+       
+        <div class="blog-header"> Blogs
+            <span class="header-caption"> My Latest <span class="color"> blog posts.</span></span>
+        </div>
+        <div class="blog-content">
+            <div class="blogs">
+                <a href="#">
+                    <div class="img">
+                        <img src="images/post-one.jpg" alt="blog-one">
+                        <div class="blog-date">8 May,20</div>
+                    </div>
+                    <div class="blog-text">
+                        <h3>Harleys In Hawaai</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus alias dolore recusandae
+                            illum, corrupti quo
+                            veniam saepe aliquid! Quis voluptates ratione consequuntur vel, perferendis cum provident?
+                            Magnam fugiat voluptas
+                            libero.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="blogs">
+                <a href="#">
+                    <div class="img">
+                        <img src="images/post-two.jpg" alt="blog-two">
+                        <div class="blog-date">16 Jan,20</div>
+                    </div>
+                    <div class="blog-text">
+                        <h3>Key To Be Productive</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt maiores,
+                            recusandae cupiditate ducimus a non tempora, architecto obcaecati eaque ipsum assumenda
+                            harum dolorum iusto tenetur
+                            eius eligendi dolor magnam sit!</p>
+                    </div>
+                </a>
+            </div>
+            <div class="blogs">
+                <a href="#">
+                    <div class="img">
+                        <img src="images/post-three.jpg" alt="blog-three">
+                        <div class="blog-date">30 Nov,19</div>
+                    </div>
+                    <div class="blog-text">
+                        <h3>Caffeine Addict</h3>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo nostrum impedit
+                            ipsam perspiciatis ratione sapiente quasi optio reprehenderit, labore consequuntur suscipit
+                            cum quas.
+                            Officiis dolorem asperiores, ut necessitatibus quas doloremque?</p>
+                    </div>
+                </a>
+            </div>
+            <div class="blogs">
+                <a href="#">
+                    <div class="img">
+                        <img src="images/post-four.jpg" alt="blog-four">
+                        <div class="blog-date">6 Jul,19</div>
+                    </div>
+                    <div class="blog-text">
+                        <h3>Web Development</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, veniam ratione quam vitae,
+                            quibusdam explicabo rem debitis velit ipsa repellat, impedit nulla fuga? Amet corporis
+                            praesentium quae.
+                            Sed, quibusdam necessitatibus.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="blogs">
+                <a href="#">
+                    <div class="img">
+                        <img src="images/post-five.jpg" alt="blog-five">
+                        <div class="blog-date">1 Jun,19</div>
+                    </div>
+                    <div class="blog-text">
+                        <h3>Work From Home</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sunt eum necessitatibus rem
+                            dignissimos nulla mollitia cumque, provident officiis non vitae? Animi aut doloremque illum,
+                            soluta hic minus
+                            sint explicabo..</p>
+                    </div>
+                </a>
+            </div>
+            <div class="blogs">
+                <a href="#">
+                    <div class="img">
+                        <img src="images/post-six.jpg" alt="blog-six">
+                        <div class="blog-date">28 Feb,19</div>
+                    </div>
+                    <div class="blog-text">
+                        <h3>Business Trip</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo tempora dolorum fuga
+                            ratione, unde,
+                            ex quaerat iste numquam nemo nihil nobis rem sint quia recusandae dignissimos quos ut rerum
+                            nam.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--copyright-section You Can Remove After Downloading-->
+        <div class="footer">
+            <div class="footer-text">
+                <img src="./images/copyright.png" alt="copyright-img" class="images" height="14px"> Willy Wonkas
+            </div>
+        </div>
+        <!--copyright-section-->
+    </div>
+    <!--blog end-->
+    <!--contact-->
+    <div id="contact">
+        <div class="contact-header">Contact <span class="color"> Me</span>
+            <div class="contact-header-caption"> <span class="color"> Get</span> In Touch.</div>
+        </div>
+        <div class="contact-content">
+            <!--Contact form-->
+            <div class="contact-form">
+                <div class="form-header">
+                    Message Me
+                </div>
+                <form id="myForm" action="#">
+                    <div class="input-line">
+                        <input id="name" type="text" placeholder="Name" class="input-name">
+                        <input id="email" type="email" placeholder="Email" class="input-name">
+                    </div>
+                    <input type="text" id="subject" placeholder="subject" class="input-subject">
+                    <textarea id="body" class="input-textarea" placeholder="message"></textarea>
+                    <button type="button" id="submit" value="send">Submit</button>
+                </form>
+
+            </div>
+            <!--Contact form-->
+            <!--Contact information-->
+            <div class="contact-info">
+                <div class="contact-info-header">
+                    Contact Info
+                </div>
+                <div class="contact-info-content">
+                    <div class="contect-info-content-line">
+                        <img src="./images/icon-name.png" class="icon" alt="name-icon">
+                        <div class="contact-info-icon-text">
+                            <h6>Name</h6>
+                            <p>Arlo Brown</p>
+                        </div>
+                    </div>
+                    <div class="contect-info-content-line">
+                        <img src="./images/icon-location.png" class="icon" alt="location-icon">
+                        <div class="contact-info-icon-text">
+                            <h6>Location</h6>
+                            <p>New York, USA</p>
+                        </div>
+                    </div>
+                    <div class="contect-info-content-line">
+                        <img src="./images/icon-phone.png" class="icon" alt="phone-icon">
+                        <div class="contact-info-icon-text">
+                            <h6>Call</h6>
+                            <p>+9865376531</p>
+                        </div>
+                    </div>
+
+                    <div class="contect-info-content-line">
+                        <img src="./images/icon-email.png" class="icon" alt="email-icon">
+                        <div class="contact-info-icon-text">
+                            <h6>Email</h6>
+                            <p>Info@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                <!--Contact information end-->
+            </div>
+        </div>
+        <!--copyright-section You Can Remove After Downloading-->
+        <div class="footer">
+            <div class="footer-text">
+                <img src="./images/copyright.png" alt="copyright-img" class="images" height="14px"> Willy Wonkas
+            </div>
+        </div>
+        <!--copyright-section-->
+    </div>
+    <!--contact end-->
+   
+    <!--all the divisions-->
+    <script src="{% static '' %}new/js/jquery.min.js"></script>
+    <script src="{% static '' %}new/js/particles.js"></script>
+    <script src="{% static '' %}new/js/particles.min.js"></script>
+    <script src="{% static '' %}new/js/index.js"></script>
+    <!--particles script-->
+    <script>
+        particlesJS("particles", { "particles": { "number": { "value": 40, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 }, "image": { "src": "img/github.svg", "width": 100, "height": 100 } }, "opacity": { "value": 0.5, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

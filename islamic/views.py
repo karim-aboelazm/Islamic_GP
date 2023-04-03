@@ -2,42 +2,149 @@ from django.shortcuts import render
 from quran import Quran
 from django.core import serializers
 from .models import *
-from django.views.generic import TemplateView,FormView
+from django.views.generic import TemplateView,FormView,DetailView
 from django.db.models import Q
 from bs4 import BeautifulSoup
+from django.shortcuts import get_object_or_404
 import requests
+import json
+
+
+    
+def get_tafsir(tt,ns,na):
+    url = f'https://tafsir.app/{tt}/{ns}/{na}'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    divs = soup.find_all("div", {"id": "preloaded-text"})
+    text = ""
+    for div in divs:
+        text += div.text
+    return text
+
+def get_eraab(ns,na):
+    url = f'https://surahquran.com/quran-search/e3rab-aya-{na}-sora-{ns}.html'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    divs = soup.find_all("div", {"class": "card-body"})
+    ancor = soup.find('a', href=f"https://surahquran.com/quran-expressed/{ns}.html")
+    text = ""
+    for p in divs[1].find_all('p'):
+        text += '' if "إعراب الصفحة" in p.text else p.text
+    return text
+
+def get_ayah_mp3(ns,na):
+    url = f'https://surahquran.com/aya-{na}-sora-{ns}.html'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    divs = soup.find("audio")
+    return divs.source['src'].replace("MaherAlMuaiqly128kbps","Alafasy_128kbps")
 
 class HomeView(TemplateView):
-    template_name = 'index.html'
-<<<<<<< HEAD
+    template_name = 'home.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # quran = Quran()
-        # quraan={1: 7, 2: 286, 3: 200, 4: 176, 5: 120, 6: 165, 7: 206, 8: 75, 9: 129, 10: 109, 11: 123, 12: 111, 13: 43, 14: 52, 15: 99, 16: 128, 17: 111, 18: 110, 19: 98, 20: 135, 21: 112, 22: 78, 23: 118, 24: 64, 25: 77, 26: 227, 27: 93, 28: 88, 29: 69, 30: 60, 31: 34, 32: 30, 33: 73, 34: 54, 35: 45, 36: 83, 37: 182, 38: 88, 39: 75, 40: 85, 41: 54, 42: 53, 43: 89, 44: 59, 45: 37, 46: 35, 47: 38, 48: 29, 49: 18, 50: 45, 51: 60, 52: 49, 53: 62, 54: 55, 55: 78, 56: 96, 57: 29, 58: 22, 59: 24, 60: 13, 61: 14, 62: 11, 63: 11, 64: 18, 65: 12, 66: 12, 67: 30, 68: 52, 69: 52, 70: 44, 71: 28, 72: 28, 73: 20, 74: 56, 75: 40, 76: 31, 77: 50, 78: 40, 79: 46, 80: 42, 81: 29, 82: 19, 83: 36, 84: 25, 85: 22, 86: 17, 87: 19, 88: 26, 89: 30, 90: 20, 91: 15, 92: 21, 93: 11, 94: 8, 95: 8, 96: 19, 97: 5, 98: 8, 99: 8, 100: 11, 101: 11, 102: 8, 103: 3, 104: 9, 105: 5, 106: 4, 107: 7, 108: 3, 109: 6, 110: 3, 111: 5, 112: 4, 113: 5, 114: 6}
-        # s = list(quraan.keys())
-        # a = list(quraan.values())
-        
-        # for i in s[23:]:
-        #     surah = Surah.objects.get(number=i)
-        #     for j in range(1,a[i-1]+1):
-        #         ayah = quran.get_verse(i,j)['verse']
-        #         juz = Juz.objects.get(number = ayah['juz_number'] )
-        #         hizb = Hizb.objects.get(number = ayah['hizb_number'])
-        #         num = ayah['verse_number']
-        #         text = ayah['text_madani']
-        #         Ayah.objects.create(surah=surah,juz=juz,hizb=hizb,number=num,text=text)
-        #     print(f'Done [{i}]')
-        ayah = Ayah.objects.all()
-        surah = Surah.objects.all()
-        context['ayahs'] = serializers.serialize('json', ayah)
-        context['surahs'] = serializers.serialize('json', surah)
+        context['ayahs'] = serializers.serialize('json', Ayah.objects.all())
+        context['surahs'] = serializers.serialize('json', Surah.objects.all())
+        context['hizbs'] = serializers.serialize('json', Hizb.objects.all())
+        context['juzs'] = serializers.serialize('json', Juz.objects.all())
+        return context
+    
+class QuraanListView(TemplateView):
+    template_name = 'quraan_list.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_surahs'] = Surah.objects.all()   
         return context
 
+class QuraanPageView(DetailView):
+    template_name="quraan.html"
+    model = Surah
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_surah"] = context['object']
+        return context
+    
 class SearchView(TemplateView):
     template_name = "search.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET.get("keyword")
+        kwa = "+".join(kw.split())
+        url = f"https://surahquran.com/quran-search/search.php?search_word={kwa}"
+        response = requests.get(url)
+        # Create a BeautifulSoup object
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Extract all div elements with a class of "content"
+        div_tags = soup.find_all('div', class_="content")
+        ayahs = []
+
+        # Find the total number of pagination pages
+        page_count_element = soup.find("ul", class_="pagination")
+        if page_count_element is None:
+            # There is only one page, so just scrape the data from the first page
+            for div in div_tags:
+                txt = set(div.find_all('a'))
+                for i in txt:
+                    link = i['href'].replace('https://surahquran.com/', '').replace('.html', '')
+                    if link.startswith('english-aya'):
+                        data = link.split('-')
+                        data.pop(0)
+                        ayahs.append((int(data[1]), int(data[-1])))
+                    else:
+                        continue
+        else:
+            # There are multiple pages, so scrape the data from each page
+            page_count = len(page_count_element.find_all("li")) - 2  # subtract 2 for the "Previous" and "Next" buttons
+            for page in range(1, page_count + 1):
+                page_url = f"{url}&page={page}"
+                page_response = requests.get(page_url)
+                page_soup = BeautifulSoup(page_response.content, 'html.parser')
+                page_div_tags = page_soup.find_all('div', class_="content")
+                for div in page_div_tags:
+                    txt = set(div.find_all('a'))
+                    for i in txt:
+                        link = i['href'].replace('https://surahquran.com/', '').replace('.html', '')
+                        if link.startswith('english-aya'):
+                            data = link.split('-')
+                            data.pop(0)
+                            ayahs.append((int(data[1]), int(data[-1])))
+                        else:
+                            continue
+        filter_ayah = []
+        for aya in ayahs:  
+            s = Surah.objects.get(number=aya[1])
+            filter_ayah.append(Ayah.objects.get(surah=s,number=aya[0]))
+        # for d in div_tags:
+        #     output.append(d.text)
+        context["results"] = filter_ayah 
+        return context  
+
+class TafseerPageView(TemplateView):
+    template_name = "tafseer.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kw = self.request.GET.get("t_ayah")
+        tkw = self.request.GET.get("tafseer")
+        tafseer_type = ''
+        tafseer_ar_type = ''
+        if tkw == '1':
+            tafseer_type = 'saadi'
+            tafseer_ar_type = 'السعدي'
+        elif tkw == '2':
+            tafseer_type = 'baghawi'
+            tafseer_ar_type = 'البغوي'
+        elif tkw == '3':
+            tafseer_type = 'ibn-katheer'
+            tafseer_ar_type = 'ابن كثير'
+        elif tkw == '4':
+            tafseer_type = 'qurtubi'
+            tafseer_ar_type = 'القرطبي'
+        elif tkw == '5':
+            tafseer_type = 'tabari'
+            tafseer_ar_type = 'الطبري'
+        else:
+            pass
         kwa = "+".join(kw.split())
         url = f"https://surahquran.com/quran-search/search.php?search_word={kwa}"
         response = requests.get(url)
@@ -59,14 +166,38 @@ class SearchView(TemplateView):
                     continue
         filter_ayah = []
         for aya in ayahs:  
-            s = Surah.objects.get(number=aya[1])
-            filter_ayah.append(Ayah.objects.get(surah=s,number=aya[0]))
-        # for d in div_tags:
-        #     output.append(d.text)
-        context["results"] = filter_ayah 
+            filter_ayah.append(aya)
+            # filter_ayah.append(Ayah.objects.get(surah=s,number=aya[0]))
+        context["tafseer_result"]= get_tafsir(tafseer_type,filter_ayah[0][1],filter_ayah[0][0]) if len(filter_ayah) > 0 else ''
+        context["ayah"] = Ayah.objects.get(surah=filter_ayah[0][1],number=filter_ayah[0][0]) if len(filter_ayah) > 0 else ''
+        context["tafseer_ar"] = tafseer_ar_type
+        return context 
+
+class AyahSelectedInfo(TemplateView):
+    template_name = "aya_info.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Define a function to convert Arabic numbers to English
+        ayah = Ayah.objects.get(id=kwargs['ayah_id'])
+        context["ayah"] = ayah
+        context['eraab'] = get_eraab(int(ayah.surah.number),int(ayah.number))
+        tafseer1 = 'saadi'
+        tafseer2 = 'baghawi'
+        tafseer3 = 'ibn-katheer'
+        tafseer4 = 'qurtubi'
+        tafseer5 = 'tabari'
+        context['tafseer_ar1'] = 'السعدي'
+        context['tafseer_ar2'] = 'البغوي'
+        context['tafseer_ar3'] = 'ابن كثير'
+        context['tafseer_ar4'] = 'القرطبي'
+        context['tafseer_ar5'] = 'الطبري'
+        context['tafseer1'] = get_tafsir(tafseer1,ayah.surah.number,ayah.number)
+        context['tafseer2'] = get_tafsir(tafseer2,ayah.surah.number,ayah.number)
+        context['tafseer3'] = get_tafsir(tafseer3,ayah.surah.number,ayah.number)
+        context['tafseer4'] = get_tafsir(tafseer4,ayah.surah.number,ayah.number)
+        context['tafseer5'] = get_tafsir(tafseer5,ayah.surah.number,ayah.number)
+        context['aya_mp3'] = get_ayah_mp3(ayah.surah.number,ayah.number)
         return context
-       
-=======
     
 class ProphetsStoriesView(TemplateView):
     template_name = "prophets_stories.html"
@@ -74,5 +205,3 @@ class ProphetsStoriesView(TemplateView):
         context = super().get_context_data(**kwargs)
         # context[""] = 
         return context
-    
->>>>>>> 22b9cbcf09e59a03b9133eba451aa656bda6d5e1

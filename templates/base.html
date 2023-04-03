@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ar" dir="rtl">
+
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    {% include 'snippets/head.html' %}
+    {% block extra_static_urls %}{% endblock extra_static_urls %}
+</head>
+
+<body>
+    <div id="all">
+        {% include 'snippets/header.html' %}
+        <div id="header">
+            <div id="particles"></div>
+            <div class="header-content mt-5">
+                <div class="container">
+                    <div class="row">
+                        {% block header__card__content %}{% endblock header__card__content %} 
+                    </div>
+                </div>
+            </div>
+            <div class="header-image">
+                <img src="{% static '' %}new/images/q.png" style="float: right; opacity: 0.0699;" alt="logo">
+            </div>
+        </div>
+        {% block main_content %}
+        {% endblock main_content %}
+    </div>
+    <!--
+        some pages in snippets/dummy.html
+    -->
+    {% include 'snippets/scripts.html' %}
+</body>
+
+</html>

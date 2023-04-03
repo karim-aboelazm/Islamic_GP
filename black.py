@@ -1,0 +1,1 @@
+//how to make arabic numbers show as english in div using id numbers in js?

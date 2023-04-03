@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ISLAMIC
+{% endblock title %}
+{% block extra_static_urls %}
+
+
+{% endblock extra_static_urls %}
+{% block header__card__content %}
+<div class="col-md-9 mx-auto pt-3 pb-5 px-5 text-right header__card">
+
+<p class="text-center hr-lines pt-5"> (  سورة {{current_surah.name}}   )</p>
+{% for ayah in current_surah.ayah_set.all %}
+<span id="non_arabic_num">
+    <a id="" style="text-decoration:none;color:#fff;" href="{% url 'app:ayah_info' ayah.id %}">{{ayah.text}}</a>
+</span>
+<span id=""> ({{ayah.ar_number}})</span>  
+{% endfor %}
+</div>
+{% endblock header__card__content %}
+                                
