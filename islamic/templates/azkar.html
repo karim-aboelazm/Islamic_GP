@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Quraan Surahs
+{% endblock title %}
+{% block extra_static_urls %}
+<style>
+    #loader,#breaker,#breaker-two{display:none !important;}
+    #header{display:none !important;}
+    #about{display:block !important;}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock extra_static_urls %}
+{% block main_content %}
+<div id="about">  
+    <!--about content-->
+    <div id="" class="container">
+        <div class="about-header">
+            حصن <span class="color">المسلم</span>
+        </div>
+        
+        <div class="row" style="max-width: 100%;">
+            {% for zikr in azkar_s %}
+            <div class="col-md-12">
+                <div class="service wow" style="width:100%;height:auto;display: inline-flex;"> 
+                    <div class="service-description text-white" style="z-index: 100;width:100%">
+                        <p class="pt-3">{{zikr.zikr}}</p>
+                        <p class="pt-3">
+                            
+                            {% if zikr.repeat == 1 %}
+                                 تكرر مرة واحدة 
+                            {% elif zikr.repeat == 2 %}
+                                  تكرر مرتان
+                            {% elif zikr.repeat > 2 and zikr.repeat <= 10 %}
+                                {{zikr.repeat}}   تكرر مرات
+                            {% else %}
+                                {{zikr.repeat}}   تكرر مرة
+                            {% endif %}
+                                
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% comment %} <div class="card-container">
+                <div class="pop-up-card">
+                    <h2 class="text-center mb-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <audio id="surahAudio" controls="controls" class="align-right">
+                                    <source id="activeAyah" src="{% if surah.number < 10 %}https://server8.mp3quran.net/afs/00{{surah.number}}.mp3{% elif 10 < surah.number < 100  %}https://server8.mp3quran.net/afs/0{{surah.number}}.mp3{% else %}https://server8.mp3quran.net/afs/{{surah.number}}.mp3{% endif %}" title="2826" type="audio/mp3">
+                                </audio>
+                            </div>
+                            <div class="col-md-7">
+                                سورة {{surah.name}} 
+                            </div>
+                            <div class="col-md-1">
+                                <a href="{% url 'app:quran' surah.id %}" style="text-decoration:none;font-size:25px"><i class="fa fa-book text-dark" aria-hidden="true"></i></a>
+                            </div>
+
+                        </div>
+                         </h2>
+                    
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>معني أسمها :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.maeni_asamuha}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>سبب تسميتها :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.sabab_tasmiatiha}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>أسماؤها :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.asmawuha}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>مقصدها العام :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.maqsiduha_aleamu}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>سبب نزولها :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.sabab_nuzuliha}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>فضلها :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.fadluha}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>مناسباتها :</p> 
+                        </div>
+                        <div class="col-md-10">
+                             <p>{{surah.munasabatiha}}</p>
+                        </div>
+                    </div>
+                    <button class="close-btn text-danger" style="background:none;border:none;"><i class="fa fa-close" aria-hidden="true"></i></button>
+                    
+                </div>
+            </div> {% endcomment %}
+            {% endfor %}  
+        </div> 
+        
+    </div>
+    
+    <style>
+        .card-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index:10000;
+        }
+        
+        .pop-up-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            border:2px solid; 
+            border-radius:25px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index:10000;
+
+        } 
+        audio:hover, audio:focus, audio:active
+        {
+        box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+        transform: scale(1.05);
+        }
+
+
+        audio
+        {
+        transition:all 0.5s linear;
+        box-shadow: 2px 2px 4px 0px #006773;
+        border-radius:25px ;
+        }                      
+    </style>
+    <script>
+        const buttons = document.querySelectorAll('.show-card');
+        const cardContainers = document.querySelectorAll('.card-container');
+        const popUpCards = document.querySelectorAll('.pop-up-card');
+        const closeButtons = document.querySelectorAll('.close-btn');
+    
+        buttons.forEach((button, index) => {
+            const itemId = button.dataset.id;
+            const cardContainer = cardContainers[index];
+            const popUpCard = popUpCards[index];
+            
+            button.addEventListener('click', () => {
+                cardContainer.style.display = 'block';
+            });
+    
+            closeButtons[index].addEventListener('click', () => {
+                cardContainer.style.display = 'none';
+            });
+    
+            window.addEventListener('click', (e) => {
+                if (e.target === cardContainer) {
+                    cardContainer.style.display = 'none';
+                }
+            });
+        });
+
+    </script>
+</div>
+{% endblock main_content %}
+

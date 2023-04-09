@@ -1,32 +1,171 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Stories
+{% endblock title %}
+{% block extra_static_urls %}
+<style>
+    #loader,#breaker,#breaker-two{display:none !important;}
+    #header{display:none !important;}
+    #about{display:block !important;}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock extra_static_urls %}
+{% block main_content %}
+<div id="about" class="pt-5">  
+    <div class="row pt-5">
+      <div class="col-md-10 mx-auto pt-5">
+          <form class="form-control" action="{% url 'app:stories' %}" style="border: none;background:none;">
+              <div class="row px-5">
+                  <div class="input-group">
+                      <select class="form-select" id="inputGroupSelect04" style="background: none;color:#fff;" required aria-label="Example select with button addon" name="story" >
+                        <option value=""  style="background: none;color:#c70039;font-size: 18px;">اختر القصص</option>
+                        {% for s in all_stories  %}
+                        <option value="{{forloop.counter}}" style="background: none;color:#c70039;font-size: 18px;">قصص {{s.title}}</option>
+                        {% endfor %}
+                      </select>
+                      <button class="m-2 p-3" style="border-radius: 12px;" type="submit">شاهد الان</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+    </div>
+    <div class="my-5">
+        <!--services header-->
+        <div class="services-heading wow">
+            قصص <span class="color"> {{story.title}}</span> 
+        </div>
+        <div class="row">
+            <div class="col-md-10 mx-auto mb-5">
+                <div class="row" id="playlist" style="border:3px solid #c70039; padding:20px 10px;border-radius:25px">
+                    <div class="col-md-8 mx-auto" id="" style="height:600px;">
+                        <iframe id="display-frame1" width="100%" height="100%" style="border-radius:25px;"  src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                      <div class="col-md-4 text-white" id="" class="">
+                        <div class="row">
+                          <div class="title"></div>
+                          <div class="sub-title">
+                            <a href="" class="channel"></a><span id="video-count"> </span>
+                          </div>
+                        </div>
+                        <div id="drop-icon"></div>
+                        <div id="vli-videos" style="height:535px; overflow-y:scroll;">
+                            {% for story_content in story.storycontent_set.all %}
+                                <div class="video-con active-con" video="{{story_content.video_url}}">
+                                    <div class="index title">0</div>
+                                    <div class="thumb">
+                                        <img src="{{story_content.video_poster}}" alt="">
+                                    </div>
+                                    <div class="v-titles">
+                                        <div class="title mx-2">{{story_content.video_title}}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script>
+    function qs(elem) {
+        return document.querySelector(elem);
+      }
+      function qsa(elem) {
+        return document.querySelectorAll(elem);
+      }
+      
+      // globals
+      var activeCon = 0,
+        totalCons = 0;
+      
+      // elements
+        const v_cons = qsa(".video-con"),
+        a_cons = qsa(".active-con"),
+        v_count = qs("#video-count"),
+        info_btns = qsa("#lower-info div"),
+        drop_icon = qs("#drop-icon"),
+        video_list = qs("#v-list"),
+        display = qs("#display-frame1");
+      
+      // activate container
+      function activate(con) {
+        deactivateAll();
+        indexAll();
+        countVideos(con.querySelector(".index").innerHTML);
+        con.classList.add("active-con");
+        con.querySelector(".index").innerHTML = "►";
+      }
+      // deactivate all container
+      function deactivateAll() {
+        v_cons.forEach((container) => {
+          container.classList.remove("active-con");
+        });
+      }
+      // index containers
+      function indexAll() {
+        var i = 1;
+        v_cons.forEach((container) => {
+          container.querySelector(".index").innerHTML = i;
+          i++;
+        });
+      }
+      // update video count
+      function countVideos(active) {
+        v_count.innerHTML = active + " / " + v_cons.length;
+      }
+      // icon activate
+      function toggle_icon(btn) {
+        if (btn.classList.contains("icon-active")) {
+          btn.classList.remove("icon-active");
+        } else btn.classList.add("icon-active");
+      }
+      // toggle video list
+      function toggle_list() {
+        if (video_list.classList.contains("li-collapsed")) {
+          drop_icon.style.transform = "rotate(0deg)";
+          video_list.classList.remove("li-collapsed");
+        } else {
+          drop_icon.style.transform = "rotate(180deg)";
+          video_list.classList.add("li-collapsed");
+        }
+      }
+      function loadVideo(url) {
+        display.setAttribute("src", url);
+      }
+      
+      //******************
+      // Main Function heres
+      //******************
+      window.addEventListener("load", function () {
+        // starting calls
+        indexAll(); // container indexes
+        countVideos(1);
+        activate(v_cons[0]);
+        loadVideo(v_cons[0].getAttribute("video"));
+      
+        // Event handeling goes here
+        // on each video container click
+        v_cons.forEach((container) => {
+          container.addEventListener("click", () => {
+            activate(container);
+            loadVideo(container.getAttribute("video"));
+          });
+        });
+        // on each button click
+        info_btns.forEach((button) => {
+          button.addEventListener("click", () => {
+            toggle_icon(button);
+          });
+        });
+        // drop icon click
+        drop_icon.addEventListener("click", () => {
+          toggle_list();
+        });
+      });
+      
+</script>
+{% endblock main_content %}
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-</head>
-
-<body>
-    <header>
-        <!-- place navbar here -->
-    </header>
-    <main>
-    </main>
-    <footer>
-        <!-- place footer here -->
-    </footer>
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>

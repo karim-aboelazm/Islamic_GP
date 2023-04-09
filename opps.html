@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Play Audio</title>
+</head>
+<body>
+    <h1>Play Audio</h1>
+    <audio controls id="myAudio">
+        <source src="a1.ogg" type="audio/ogg">
+        <source src="a1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    <script>
+        var myAudio = document.getElementById("myAudio");
+        myAudio.autoplay = true;
+    </script>
+</body>
+</html>

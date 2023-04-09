@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from quran import Quran
 from django.core import serializers
@@ -5,12 +6,28 @@ from .models import *
 from django.views.generic import TemplateView,FormView,DetailView
 from django.db.models import Q
 from bs4 import BeautifulSoup
-from django.shortcuts import get_object_or_404
 import requests
+from django.shortcuts import get_object_or_404
+from datetime import datetime
 import json
+import geocoder
+import re
+from django.db.models.functions import Substr
+from django.db.models.functions import Length
+from django.db.models import F
+from django.core.paginator import Paginator
+import salat
+import datetime as dt
+import pytz
+import subprocess
+from django.conf import settings
+import os
+import time
+from playsound import playsound
+from django.http import HttpResponse
+import asyncio
+import pygame
 
-
-    
 def get_tafsir(tt,ns,na):
     url = f'https://tafsir.app/{tt}/{ns}/{na}'
     response = requests.get(url)
@@ -39,21 +56,50 @@ def get_ayah_mp3(ns,na):
     divs = soup.find("audio")
     return divs.source['src'].replace("MaherAlMuaiqly128kbps","Alafasy_128kbps")
 
+def get_prayer_times():
+    pt = salat.PrayerTimes(salat.CalculationMethod.EGYPT, salat.AsrMethod.STANDARD)
+    now = dt.datetime.now()
+    date = dt.date(now.year,now.month,now.day)
+    latitude,longitude = 30.044420,31.235712
+    eastern = pytz.timezone('Africa/Cairo')
+    prayer_times = pt.calc_times(date, eastern, longitude, latitude)
+    times = []
+    for name, time in prayer_times.items():
+        readable_time = time.strftime("%I:%M %p")
+        if name == "sunrise" or name == "midnight":
+            continue
+        else:
+            times.append(readable_time)
+    return times
+
 class HomeView(TemplateView):
     template_name = 'home.html'
+    audio_file_path = "static/a1.mp3"
+    prayer_times = [dt.datetime.strptime(prayer_time, "%I:%M %p").strftime("%H:%M") for prayer_time in get_prayer_times()]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ayahs'] = serializers.serialize('json', Ayah.objects.all())
         context['surahs'] = serializers.serialize('json', Surah.objects.all())
         context['hizbs'] = serializers.serialize('json', Hizb.objects.all())
         context['juzs'] = serializers.serialize('json', Juz.objects.all())
+        context['fajr']   = get_prayer_times()[0].replace('AM',"ص").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩')) if "AM" in get_prayer_times()[0] else get_prayer_times()[0].replace("PM","م").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩'))
+        context['dhur']   = get_prayer_times()[1].replace('AM',"ص").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩')) if "AM" in get_prayer_times()[1] else get_prayer_times()[1].replace("PM","م").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩'))
+        context['asr']    = get_prayer_times()[2].replace('AM',"ص").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩')) if "AM" in get_prayer_times()[2] else get_prayer_times()[2].replace("PM","م").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩'))
+        context['maghrib']= get_prayer_times()[3].replace('AM',"ص").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩')) if "AM" in get_prayer_times()[3] else get_prayer_times()[3].replace("PM","م").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩'))
+        context['isha']   = get_prayer_times()[4].replace('AM',"ص").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩')) if "AM" in get_prayer_times()[4] else get_prayer_times()[4].replace("PM","م").translate(str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩'))
+        all_allah_names = AsmaaAllahElhousnaa.objects.all()[1:]
+        context["Allah_names"] = [i.name for i in all_allah_names]
+        context["duaas"] = DuaaContent.objects.annotate(text_len=Length('content')).filter(text_len__lte=100).values_list(F('content'), flat=True)
+        print(self.prayer_times)
         return context
     
+   
 class QuraanListView(TemplateView):
     template_name = 'quraan_list.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_surahs'] = Surah.objects.all()   
+        context['all_surahs'] = Surah.objects.all()
+        context["tajweed"]=TajweedContent.objects.all()
         return context
 
 class QuraanPageView(DetailView):
@@ -203,5 +249,46 @@ class ProphetsStoriesView(TemplateView):
     template_name = "prophets_stories.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context[""] = 
+        tkw = self.request.GET.get("story")
+        if tkw == '1':
+            story_name = 'قصص الانبياء'
+            story_num=Stories.objects.get(title="الانبياء")
+        elif tkw == '2':
+            story_name = 'قصص الانسان'
+            story_num=Stories.objects.get(title="الانسان")
+        elif tkw == '3':
+            story_name = 'قصص الحيوانات'
+            story_num=Stories.objects.get(title="الحيوانات")
+        elif tkw == '4':
+            story_name = 'قصص عجائب القرأن'
+            story_num=Stories.objects.get(title="عجائب القرأن")
+        else:
+            story_num=Stories.objects.get(title="الانبياء")
+        context["story"] = story_num 
+        context["all_stories"] = Stories.objects.all()
+        return context
+
+class HadeethView(TemplateView):
+    template_name = "hadeeth.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["hadeeth_list"] = Hadeeth.objects.all() 
+        return context
+   
+class HisnElmoslimView(TemplateView):
+    template_name = "hisn_elmoslim.html" 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["zikr_list"] = AzkarType.objects.all()
+        context["duaa_list"] = DuaaType.objects.all()
+        context["roqia_list"] = RoqiahShareahType.objects.all()
+        context["arkan_list"] = ArkanTypes.objects.all()
+        context["sebha_list"] = Sebha.objects.all()
+        return context
+
+class AzkarView(TemplateView):
+    template_name = "hisn_elmoslim.html" 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         return context

@@ -3,8 +3,247 @@
 {% block title %}
 ISLAMIC
 {% endblock title %}
+{% block extra_static_urls %}
+  <script>
+      // URL for the API that returns the prayer times
+
+      var url = '{{url}}';
+
+      // Function to play the Azan audio file
+      function playAzan() {
+        var audio = document.getElementById('azan-audio');
+        audio.play();
+      }
+
+      // Function to check the prayer times based on the current time
+      function checkPrayerTimes() {
+        // Get the current date and format it as YYYY-MM-DD
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        var formattedDate = year + '-' + month.toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+
+        // Make a request to the API to get the prayer times for the day
+        fetch(url + '&date=' + formattedDate)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            var timings = data.data[0].timings;
+
+            // Get the current time
+            var currentTime = new Date();
+
+            // Check if the current time matches any of the prayer times
+            for (var prayer in timings) {
+              var timeStr = timings[prayer];
+              var timeObj = new Date(formattedDate + 'T' + timeStr + 'Z');
+
+              if (timeObj.getHours() === currentTime.getHours() &&
+                  timeObj.getMinutes() === currentTime.getMinutes() &&
+                  timeObj.getSeconds() === currentTime.getSeconds()) {
+                playAzan();
+              }
+            }
+          });
+      }
+
+      // Check the prayer times every second
+      setInterval(checkPrayerTimes, 1000);
+  </script>
+  <style>
+    .balloon {
+      position: absolute;
+      top: 150px;
+      left: 2%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 50% ;
+      background-color: #0e0b03c4;
+      animation-name: balloon-walk;
+      animation-duration: 5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      box-shadow: -7px -6px 46px 4px rgba(254, 253, 253, 0.71);
+    }
+    
+    .balloon__string {
+      position: absolute;
+      top: 300px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 80px;
+      color:#fff;
+      background-color: transparent;
+    }
+    
+    .balloon__text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color:#fff;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      color: #000;
+    }
+    
+    @keyframes balloon-walk {
+      0% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(0, 100px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+    
+  </style>
+{% endblock extra_static_urls %}
+{% block top_content %}
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <script>
+        const messages = [
+          {% for d in duaas%}
+          "{{d}}",
+          {% endfor %}
+        ];
+      
+        function showMessage() {
+          const message = messages[Math.floor(Math.random() * messages.length)];
+          const container = document.createElement("div");
+          container.classList.add("message-container", "show");
+          container.textContent = message;
+          document.body.appendChild(container);
+          setTimeout(() => {
+            container.classList.add("hide");
+            container.classList.remove("show");
+            setTimeout(() => {
+              container.remove();
+            }, 1000);
+          }, 5000);
+        }
+      
+        function startTimer() {
+          setInterval(() => {
+            showMessage();
+          }, 5000);
+        }
+      
+        setTimeout(() => {
+          startTimer();
+        }, 1000);
+      </script>
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"defer></script>
+      <script> new WOW().init(); </script>
+    </div>
+  </div>
+
+  <div class="balloon">
+    <div class="balloon__text text-white" style="opacity: 0.5;">الله</div>
+    <div class="balloon__string"></div>
+  </div>
+  <script>
+    var names = [{% for name in Allah_names %}"{{ name }}",{% endfor %}];
+    var balloonText = document.querySelector('.balloon__text');
+    var nameIndex = 0;
+    balloonText.textContent = names[nameIndex];
+    setInterval(function() {
+      nameIndex++;
+      if (nameIndex >= names.length) {
+        nameIndex = 0;
+      }
+      balloonText.textContent = names[nameIndex];
+    }, 10000);
+
+  </script>
+
+{% endblock top_content %}
+{% block bottom_content %}      
+  <div class="row my-3">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-7">
+      <audio  autoplay>
+        <source src="{{azan}}" type="audio/mpeg">
+      </audio>
+      <script>
+        var audio = document.getElementById("myAudio");
+        var canPlayAudio = true;
+      
+        function playAudio() {
+          if (canPlayAudio) {
+            audio.play();
+            canPlayAudio = false;
+            setTimeout(function() {
+              canPlayAudio = true;
+            }, 5000);
+          }
+        }
+      
+        window.onload = function() {
+          playAudio();
+        };
+      </script>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-7 mx-auto">
+      <div class="row">
+        <div class="col mx-2 mb-3" style="background:none;border:2px solid #fff;border-radius:15px;">
+          <div class="card" style="background:none;">
+            <p class="text-center">الفجر</p>
+            <p class="text-center" style="font-size: 25px;">{{fajr}}</p>
+          </div>
+        </div>
+        <div class="col mx-2 mb-3" style="background:none;border:2px solid #fff;border-radius:15px;">
+          <div class="card" style="background:none;">
+            <p class="text-center">الظهر</p>
+            <p class="text-center" style="font-size: 25px;">{{dhur}}</p>
+          </div>
+        </div>
+        <div class="col mx-2 mb-3" style="background:none;border:2px solid #fff;border-radius:15px;">
+          <div class="card" style="background:none;">
+            <p class="text-center">العصر</p>
+            <p class="text-center" style="font-size: 25px;">{{asr}}</p>
+          </div>
+        </div>
+        <div class="col mx-2 mb-3" style="background:none;border:2px solid #fff;border-radius:15px;">
+          <div class="card" style="background:none;">
+            <p class="text-center">المغرب</p>
+            <p class="text-center" style="font-size: 25px;">{{maghrib}}</p>
+          </div>
+        </div>
+        <div class="col mx-2 mb-3" style="background:none;border:2px solid #fff;border-radius:15px;">
+          <div class="card" style="background:none;">
+            <p class="text-center">العشاء</p>
+            <p class="text-center" style="font-size: 25px;">{{isha}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+  </div>
+  </div>
+{% endblock bottom_content %}
 {% block header__card__content %}
-<div class="col-md-9 mx-auto pt-3 pb-5 px-5 text-right header__card" id="ayah_num">
-<div id="ayah-container" class="pt-5"></div>
-</div>
+  <div class="col-md-3"></div>
+  <div class="col-md-7 pt-3 pb-5 px-5 text-right header__card" id="ayah_num">
+    <div id="ayah-container" class="pt-5"></div>
+  </div>
+  <div class="col-md-2"></div>
+
+
 {% endblock header__card__content %}

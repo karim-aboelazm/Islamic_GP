@@ -2748,4 +2748,49 @@ a.channel {
   .v-titles div:nth-child(2) {
     margin-top: var(--s-pad);
   }
-  
+  .message-container {
+    position: fixed;
+    top: 0;
+    left: 21%;
+    width: 51%;
+    margin-top: 20px;
+    height: 100px auto;
+    /* overflow: hidden; */
+    display: none;
+    background-color: transparent;
+    border-radius: 20px;
+    border:2px solid #fff;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    line-height: 60px;
+    transition: all 1s ease;
+  }
+
+  .message-container.show {
+    display: block;
+    animation: fadeInUp 1s;
+  }
+
+  .message-container.hide {
+    display: none;
+    animation: fadeOutUp 1s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOutUp {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }

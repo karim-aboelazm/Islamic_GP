@@ -204,7 +204,6 @@ Quraan Surahs
 
     </script>
     
-    
     <!--services start-->
     <div id="services">
         <!--services header-->
@@ -244,6 +243,7 @@ Quraan Surahs
             </div>
         </div>
     </div>
+
     <div class="">
         <!--services header-->
         <div class="services-heading wow">
@@ -264,13 +264,25 @@ Quraan Surahs
                       </div>
                       <div id="drop-icon"></div>
                       <div id="vli-videos" style="height:535px; overflow-y:scroll;">
-                        {% include 'snippets/tagweed.html' %}
+                        {% for vid in tajweed  %}
+                        <div class="video-con active-con" video="{{vid.video_url}}">
+                          <div class="index title">0</div>
+                          <div class="thumb">
+                            <img src="{{vid.video_poster}}" alt="">
+                          </div>
+                          <div class="v-titles">
+                            <div class="title mx-2">{{vid.video_title}}</div>
+                          </div>
+                        </div>
+                        {% endfor %}
                       </div>
                     </div>
-                </div>
+                  </div>
+                 
             </div>
         </div>
     </div>
 </div>
+
 {% endblock main_content %}
 
