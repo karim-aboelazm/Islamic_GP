@@ -209,3 +209,16 @@ const arabicNumerals = {
 };
 const newContent = content.replace(/[0-9]/g, match => arabicNumerals[match]);
 element.innerHTML = newContent;
+
+const chatbotToggle = document.querySelector('.chatbot-toggle');
+const chatbotWindow = document.querySelector('.chatbot-window');
+const chatbotClose = document.querySelector('.chatbot-close');
+const chatbotForm = document.querySelector('.chatbot-form');
+
+chatbotToggle.addEventListener('click', () => {
+chatbotWindow.classList.toggle('active');
+chatbotToggle.setAttribute('aria-expanded', chatbotWindow.classList.contains('active'));
+chatbotWindow.setAttribute('aria-hidden', !chatbotWindow.classList.contains('active'));
+});
+          
+           

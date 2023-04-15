@@ -187,3 +187,26 @@ class TajweedContent(models.Model):
         verbose_name_plural = 'Tajweed Content' 
     def __str__(self):
         return self.video_title
+
+class QuestionsAndAnswers(models.Model):
+    question = models.TextField()
+    Answer   = models.TextField()
+    
+    class Meta:
+        verbose_name_plural = 'Questions And Answers'
+    
+    def __str__(self):
+        return self.question
+
+class ChatHistory(models.Model):
+    question = models.CharField(max_length=500)
+    Answer   = models.TextField()
+    
+    class Meta:
+        verbose_name_plural = 'Chat History'
+    
+    def __str__(self):
+        return self.question
+
+    
+    

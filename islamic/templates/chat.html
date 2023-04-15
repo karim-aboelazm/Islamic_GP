@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        /* width */
+        .chat::-webkit-scrollbar {
+          width: 1px;
+        }
+        
+        /* Track */
+        .chat::-webkit-scrollbar-track {
+          box-shadow: inset 0 0 5px grey; 
+          border-radius: 10px;
+        }
+         
+        /* Handle */
+        .chat::-webkit-scrollbar-thumb {
+          background: black; 
+          border-radius: 10px;
+        }
+        
+        /* Handle on hover */
+        .chat::-webkit-scrollbar-thumb:hover {
+          background: transparent; 
+        }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row pt-5">
+            <div class="col-md-4 mx-auto bg-dark text-white " style="border-radius:25px">
+                <div class="row py-3">
+                    <h1 class="text-center text-white">أسألني </h1>
+                    <a href="{% url 'app:echat' %}?action=del" type="button" class="col-md-3">X</a>
+                </div>
+                <div class="row">  
+                    <div id="myDiv" class="col-md-10 mx-auto chat" style="height:400px;overflow-y:auto;">
+                        {% for q in chat|slice:"0:10" %}
+                            <div class="col-md-12 text-right" style="text-align:right; border:2px solid #333;padding:15px;border-radius:25px;font-size:20px;margin-bottom:10px;background:gray;">{{q.question}}</div>
+                            <div  class="col-md-12 text-left" style="text-align:right; border:2px solid #333;padding:15px;border-radius:25px;font-size:20px;margin-bottom:10px">{{q.Answer}}</div>
+                        {% endfor %}
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <form class="row pt-5" method="post" action="{% url 'app:chat'%}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <input type="text" class="form-control" name="ask" id="inputPassword2" placeholder="">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-dark mb-3">send</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var myDiv = document.getElementById("myDiv");
+        myDiv.scrollTop = myDiv.scrollHeight;
+    </script>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

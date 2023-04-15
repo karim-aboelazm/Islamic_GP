@@ -1,0 +1,50 @@
+<div class="chatbot">
+    <button class="chatbot-toggle" aria-label="Open chatbot"><i class="fa fa-comments"></i></button>
+    <div class="chatbot-window" aria-hidden="true">
+      <div class="row">
+        <div class="col-md-12 mx-auto text-white " style="border-radius:25px">
+          <div class="row py-3">
+              <div class="col-md-10">
+                <h3 class="text-center text-white">أسألني </h3>
+              </div>
+              <div class="col-md-1">
+                <a href="{% url 'app:echat' %}?action=del" type="button" class="col-md-3" style="text-decoration:none;color:#fff;">X</a>
+              </div>
+              <div class="col-md-1"></div>
+          </div>
+          <div class="row">  
+              <div id="myDiv" class="col-md-10 mx-auto chat" style="height:280px;overflow-y:auto;">
+                  {% for q in chat|slice:"0:10" %}
+                      <div class="col-md-12 text-right" style="text-align:right; border:2px solid #333;padding:15px;border-radius:25px;font-size:20px;margin-bottom:10px;background:gray;">{{q.question}}</div>
+                      <div  class="col-md-12 text-left" style="text-align:right; border:2px solid #333;padding:15px;border-radius:25px;font-size:20px;margin-bottom:10px">{{q.Answer}}</div>
+                  {% endfor %}
+              </div> 
+          </div>
+          <div class="row">
+              <div class="col-md-12 mx-auto">
+                <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+                  <form id="my-form" class="row pt-5" method="GET" action="{% url 'app:home'%}">
+                      {% csrf_token %}
+                      <div class="row">
+                          <div class="col-md-10">
+                              <input type="text" class="form-control" name="ask" id="task" placeholder="">
+                          </div>
+                          <div class="col-md-2">
+                              <button type="submit" class="btn mb-3" style="
+                              width: 100%;
+                              color:#fff;
+                              left: 37px;
+                              bottom: 22px;
+                              text-align: center;
+                              position: relative;"><i class="fa fa-send" aria-hidden="true"></i></button>
+                          </div>
+  
+                      </div>
+                  </form>
+              </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
