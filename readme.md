@@ -44,10 +44,6 @@
 ###
 ----
 ![img](https://github.com/karim-aboelazm/Islamic_GP/blob/0f418881abd7e0c30fe59e40676495d5780fd0d3/static/website/h15.png)
-###
-----
-![img](https://github.com/karim-aboelazm/Islamic_GP/blob/0f418881abd7e0c30fe59e40676495d5780fd0d3/static/website/h16.png)
-## 
 ---
 # Islamic Backend Coding  
 ### 
