@@ -24,10 +24,10 @@ Quraan Surahs
                     <div class="row px-5">
                         <div class="col-md-12 pt-3" style="display: inline-flex;height: 100px;">
                             <div class="form-group" style="width: 80%;">
-                                <input type="text" class="form-control py-3" id="name" name="keyword" placeholder="ابحث عن الايه القرأنيه بالتشكيل" style="border-radius: 15px; font-size: 22px;background:none;color:#fff;box-shadow:none">
+                                <input type="text" class="form-control py-3" id="search_input" name="keyword" placeholder="ابحث عن الايه القرأنيه بالتشكيل" style="border-radius: 15px; font-size: 22px;background:none;color:#fff;box-shadow:none">
                             </div>
                             <div class="mic mx-3" style="width: 10%;">
-                                <button type="button"  class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-microphone" aria-hidden="true"></i></button>
+                                <button type="button" id="search_btn"  class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-microphone" aria-hidden="true"></i></button>
                             </div>
                             <div class="search mx-3" style="width: 10%;">
                                 <button type="submit" class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-search" aria-hidden="true"></i></button> 
@@ -36,6 +36,49 @@ Quraan Surahs
                         
                     </div>
                 </form>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                      const outputElement = document.getElementById('search_input');
+                      const startButton = document.getElementById('search_btn');
+                
+                      // Check if the browser supports the Web Speech API
+                      if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                        // Create a new SpeechRecognition object
+                        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                
+                        // Set the language to Arabic
+                        recognition.lang = 'ar-SA';
+                
+                        // Define event handlers for recognition
+                        recognition.onstart = function() {
+                          outputElement.value = 'استمع ...';
+                        };
+                
+                        recognition.onresult = function(event) {
+                          const transcript = event.results[event.results.length - 1][0].transcript;
+                          outputElement.value = transcript;
+                        };
+                
+                        recognition.onerror = function(event) {
+                          console.error('Speech recognition error:', event.error);
+                        };
+                
+                        recognition.onend = function() {
+                          if (outputElement.value === 'استمع ...') {
+                            outputElement.value = 'لا اسمع شئ ....';
+                          }
+                        };
+                
+                        // Start the recognition process when the button is clicked
+                        startButton.addEventListener('click', function() {
+                          outputElement.value = 'استمع ...';
+                          recognition.start();
+                        });
+                      } else {
+                        outputElement.value = 'هذه الخدمة غير متوفره في هذا المتصفح';
+                      }
+                    });
+                  </script>
             </div>
         </div>
         <div class="row" style="max-width: 100%;">

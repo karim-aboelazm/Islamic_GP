@@ -1,12 +1,11 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-class Surah(models.Model):
+class Surah(models.Model):      
     number = models.IntegerField(unique=True)
     name = models.CharField(max_length=100)
     number_of_ayahs = models.IntegerField()
     revelation_type = models.CharField(max_length=100)
-    
     maeni_asamuha = models.TextField(blank=True,null=True)
     sabab_tasmiatiha = models.TextField(blank=True,null=True)
     asmawuha = models.TextField(blank=True,null=True)
@@ -207,6 +206,3 @@ class ChatHistory(models.Model):
     
     def __str__(self):
         return self.question
-
-    
-    

@@ -84,7 +84,7 @@ def get_prayer_times():
     prayer_times              = pt.calc_times(date, eastern, longitude, latitude)
     times                     = []
     for name, time in prayer_times.items():
-        readable_time = time.strftime("%I:%M %p")
+        readable_time = time.strftime("%I:%M %p")  
         if name == "sunrise" or name == "midnight":
             continue
         else:
