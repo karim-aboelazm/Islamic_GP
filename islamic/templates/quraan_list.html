@@ -22,18 +22,15 @@ Quraan Surahs
             <div class="col-md-12 mb-5" >
                 <form class="form-control" method="get" action="{% url 'app:search' %}" style="border: none;background:none;">
                     <div class="row px-5">
-                        <div class="col-md-12 pt-3" style="display: inline-flex;height: 100px;">
-                            <div class="form-group" style="width: 80%;">
-                                <input type="text" class="form-control py-3" id="search_input" name="keyword" placeholder="ابحث عن الايه القرأنيه بالتشكيل" style="border-radius: 15px; font-size: 22px;background:none;color:#fff;box-shadow:none">
+                            <div class="col-md-10 my-3">
+                                <input type="text" class="form-control py-3" id="search_input" name="keyword" placeholder="ابحث عن الايه القرأنيه بالتشكيل" style="border-radius: 15px; font-size: 22px;background:none;color:#fff;box-shadow:none;width:100%">
                             </div>
-                            <div class="mic mx-3" style="width: 10%;">
-                                <button type="button" id="search_btn"  class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-microphone" aria-hidden="true"></i></button>
+                            <div class="col-md-1 p-2">
+                                <button type="button" id="search_btn"  class="col-md-12 py-3" style="width:90%"><i class="fa fa-microphone" aria-hidden="true"></i></button>
                             </div>
-                            <div class="search mx-3" style="width: 10%;">
-                                <button type="submit" class="col-md-11 py-3" style="position: relative;bottom:20px"><i class="fa fa-search" aria-hidden="true"></i></button> 
-                            </div>
-                        </div>
-                        
+                            <div class="col-md-1 p-2">
+                                <button type="submit" id="submit_btn" class="col-md-12 py-3" style="width:90%"><i class="fa fa-search" aria-hidden="true"></i></button> 
+                            </div>  
                     </div>
                 </form>
                 <script>
@@ -334,8 +331,8 @@ Quraan Surahs
     }
     @media  (min-width: 600px) and (max-width: 1400px) {
       .pop-up-card {height: 500px; overflow-y:auto;}
-      #surah_te,#surah_te,#surah_ic{
-        display:block;
+      #search_btn,#submit_btn{
+        width:100% !important;
       }
       
     }
