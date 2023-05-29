@@ -3,7 +3,7 @@
 {% block title %} ISLAMIC {% endblock title %}
 {% block top_content %}
   <div class="row">
-    <div class="col-md-8 mx-auto">
+    <div class="col-md-8 mx-auto " >
       <script>
         const messages = [
           {% for d in duaas%}
@@ -134,8 +134,18 @@
 {% endblock bottom_content %}
 {% block header__card__content %}
   <div class="col-md-3"></div>
-  <div class="col-md-7 pt-3 pb-5 px-5 text-right header__card" id="ayah_num">
-    <div id="ayah-container" class="pt-5"></div>
+  <div class="col-md-7 pt-3 pb-5 px-5  text-right header__card" id="ayah_num">
+    <div id="ayah-container" class="pt-5 "></div>
   </div>
   <div class="col-md-2"></div>
+
+  <style>
+    @media screen and (max-width: 600px) {
+      .message-container {display: none !important;}
+      .balloon {display: none;}
+      #ayah_font {font-size: 15px !important;}
+      #ayah_font1 {font-size: 15px !important;}
+      #ayah_num {font-size: 13px !important;}
+    }
+  </style>
 {% endblock header__card__content %}

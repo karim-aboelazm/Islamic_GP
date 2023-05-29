@@ -10,7 +10,7 @@
         var surah = surahs[ayah.surah-1].fields; // Get the ayah at the specified index and wrap around if we go beyond the list length
         var juz = juzs[ayah.juz-1].fields; // Get the ayah at the specified index and wrap around if we go beyond the list length
         var hizb = hizbs[ayah.hizb-1].fields; // Get the ayah at the specified index and wrap around if we go beyond the list length
-        $("#ayah-container").html("<p class='text-white text-center' > ﴿ "+ ayah.text +" ﴾ </p>"+"<p class='text-center' style='font-size:16px;position:relative:top:10px;font-weight:700;' >"+"<span id='ayah_num'>"+" ( "+"سورة "+surah.name+" ، "+ surah.revelation_type  +" ، ايه"+" ( "+ayah.ar_number+" ) " +" ، جزء"+" ( "+juz.ar_number+" ) "  +" ، حزب"+" ( "+hizb.ar_number+" ) " +" ) "+"</span>"+"</p>"); // Update the HTML element with the ayah text and translation
+        $("#ayah-container").html("<p class='text-white text-center' id='ayah_font' > ﴿ "+ ayah.text +" ﴾ </p>"+"<p class='text-center'  style='font-size:16px;position:relative:top:10px;font-weight:700;' id='ayah_font1' >"+"<span id='ayah_num'>"+" ( "+"سورة "+surah.name+" ، "+ surah.revelation_type  +" ، ايه"+" ( "+ayah.ar_number+" ) " +" ، جزء"+" ( "+juz.ar_number+" ) "  +" ، حزب"+" ( "+hizb.ar_number+" ) " +" ) "+"</span>"+"</p>"); // Update the HTML element with the ayah text and translation
         localStorage.setItem('currentAyahIndex', ayahIndex + 1); // Increment the ayah index and store it in localStorage
     }
     

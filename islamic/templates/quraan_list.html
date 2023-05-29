@@ -99,15 +99,15 @@ Quraan Surahs
                 <div class="pop-up-card">
                     <h2 class="text-center mb-5">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="surah_au">
                                 <audio id="surahAudio" controls="controls" class="align-right">
                                     <source id="activeAyah" src="{% if surah.number < 10 %}https://server8.mp3quran.net/afs/00{{surah.number}}.mp3{% elif 10 < surah.number < 100  %}https://server8.mp3quran.net/afs/0{{surah.number}}.mp3{% else %}https://server8.mp3quran.net/afs/{{surah.number}}.mp3{% endif %}" title="2826" type="audio/mp3">
                                 </audio>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-7" id="surah_te">
                                 سورة {{surah.name}} 
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-1" id="surah_ic">
                                 <a href="{% url 'app:quran' surah.id %}" style="text-decoration:none;font-size:25px"><i class="fa fa-book text-dark" aria-hidden="true"></i></a>
                             </div>
 
@@ -326,6 +326,20 @@ Quraan Surahs
         </div>
     </div>
 </div>
+
+<style>
+    @media screen and (max-width: 600px) {
+      .pop-up-card {height: 450px; overflow-y:auto;}
+      
+    }
+    @media  (min-width: 600px) and (max-width: 1400px) {
+      .pop-up-card {height: 500px; overflow-y:auto;}
+      #surah_te,#surah_te,#surah_ic{
+        display:block;
+      }
+      
+    }
+</style>
 
 {% endblock main_content %}
 
